@@ -40,4 +40,4 @@
 (split-shell lst (rest (get-sedjvik-parametr (length lst) , 0)) -1 )
 )
 
-(shell-sort '(2 3 9 2 8 4 6 8 11 12 4 6 7 8 9 999))
+(time (shell-sort '(2 3 9 2 8 4 6 8 11 12 4 6 7 8 9 999))1000)
