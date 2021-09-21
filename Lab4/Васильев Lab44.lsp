@@ -84,10 +84,18 @@
 (define (fcons lst i)
 (let (n (+ i 1) )
     (chop(checklsp lst n))
+)    
 )
-     
-     
+
+(define (facos lst i)
+(let (n (+ i 1))
+     (if (number? (nth n lst))
+	 (acos (nth n lst))
+     (acos (isFunc (nth n lst) 0))
+) 
 )
+)
+ 
 
 (define (isFunc lst i)
 (let (n(nth i lst))
@@ -99,6 +107,7 @@
      (first (ffirst lst i))
      (rest (frest lst i))
      (cons (fcons lst i))
+     (acos (facos lst i))
      (true lst)
 )
 )
@@ -108,4 +117,5 @@
 
 ;(interpritator '(+ (- (* (/ 10 2)2)9)100))
 ;(interpritator '(first (rest (10 (+ 33 1) (- 5 1) 5 (+ 10 1)))55))
-(interpritator '(cons a b (+ 1 2)))
+;(interpritator '(cons a b (+ 1 2)))
+(interpritator '(acos (- 0 1)))
