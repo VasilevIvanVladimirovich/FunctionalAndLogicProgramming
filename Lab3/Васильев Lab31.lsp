@@ -19,10 +19,12 @@ parametr-lst
 (define (split-shell lst sedjvik i )
 (if(empty? sedjvik)
 lst
-(if(> (first sedjvik) (+ i 1))
-(gluing (cons (rest(foo (+ i 1)(first sedjvik) lst)) (split-shell lst sedjvik (+ i 1)))0 0))	))
+(if(> (last sedjvik) (+ i 1))
+(gluing (cons (rest(foo (+ i 1)(last sedjvik) lst)) (split-shell lst sedjvik (+ i 1)))0 0))	))
 (define (shell-sort lst)
 (if (empty? lst) 
-"list is empty"
-(filter number? (split-shell lst (rest (get-sedjvik-parametr (length lst) , 0)) -1 ))))
-(shell-sort '(6 77 4))
+lst
+(if (=(length lst)1)
+lst
+(filter number? (split-shell lst (rest (get-sedjvik-parametr (length lst) , 0)) -1 )))))
+(shell-sort '(2))
