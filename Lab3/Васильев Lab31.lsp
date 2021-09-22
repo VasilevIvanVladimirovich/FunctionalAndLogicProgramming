@@ -1,4 +1,4 @@
-(define (get-sedjvik-parametr len parametr-lst n) ;Ooieoey iaoiaeo nienie ia?aiao?ia Nya?aeea 
+(define (get-sedjvik-parametr len parametr-lst n)
 (if (< len 3)
 '(nil 1)
 (if(= (% n 2) 0)
@@ -27,4 +27,4 @@ lst
 (if (=(length lst)1)
 lst
 (filter number? (split-shell lst (rest (get-sedjvik-parametr (length lst) , 0)) -1 )))))
-(shell-sort '(2))
+(shell-sort '(2 1 2 5 3 2 1 6 5 4 3 2 1 7 6 2 1 2 5 3 2 1))
