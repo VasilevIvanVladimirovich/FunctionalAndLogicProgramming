@@ -1,0 +1,56 @@
+(define (gol word i liter1 liter2)
+  (if (< i (length word))     
+  (if (= (nth (- i 1) word) liter1)
+  	(if (= (nth (+ i 1) word) liter2)
+      ""  
+      (if (= (nth (- i 1) word) liter2)
+        (if (= (nth (+ i 1) word) liter1)
+            ""
+       (nth i word)
+      )
+       (nth i word)   
+  	  )
+        )
+      (nth i word))
+)
+  )
+
+
+(define (goletter word liter1 liter2 i)
+  (if (< i (length word))
+    (flat (list (gol word i liter1 liter2) (goletter word liter1 liter2 (+ i 1))))          
+    )
+    )
+      
+(define (goWord predloj liter1 liter2 i)
+  (if (< i (length predloj))
+  (cons (join(chop(goletter (nth i predloj) liter1 liter2 0))) (goWord predloj liter1 liter2 (+ i 1)))
+  )
+  )
+
+
+(define (goPredloj text liter1 liter2 i)
+  (if (< i (length text)))
+  (list (chop(goWord (nth i text) liter1 liter2 0))) 
+  )
+
+(define (start text liter1 liter2 i)
+	(if (< i (length text))
+     (cons (goPredloj text liter1 liter2 i)
+           (start text liter1 liter2 (+ i 1))
+
+)
+        )
+  )
+
+(define (foo text liter1 liter2)
+  (if (empty? text)
+      "empty"
+      (map flat (chop(start text liter1 liter2 0))))
+  )
+
+(foo '(("hello" "world" "yes")("hi" "hello")) "w" "r")
+
+
+
+;(nth 0(nth 0 (nth 0 text)))
