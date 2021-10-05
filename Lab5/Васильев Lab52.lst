@@ -1,0 +1,120 @@
+(define (gonumbr lit) ;gluh
+  (if (or (= lit "п") 
+          (= lit "ф") 
+          (= lit "т") 
+          (= lit "с") 
+          (= lit "ш") 
+          (= lit "к") 
+          (= lit "ц") 
+          (= lit "х")
+          (= lit "б") 
+          (= lit "в") 
+          (= lit "г") 
+          (= lit "д") 
+          (= lit "ж") 
+          (= lit "з")
+      	  (= lit "щ")
+          (= lit "ч"))
+    "1"
+  (if (or (= lit "м") ;Sonor
+          (= lit "н") 
+          (= lit "л") 
+          (= lit "р"))
+    "2"
+  (if (or (= lit "а") ;glasn
+          (= lit "о") 
+          (= lit "у") 
+          (= lit "ы")
+          (= lit "и")
+          (= lit "э")
+          (= lit "е")
+          (= lit "я")
+          (= lit "ё")
+          (= lit "ю"))
+    "3"
+    (if (= lit "й") ;Й
+        "4"
+      )
+	)
+	)
+))
+
+(define (gol1 word i)
+  (if (< i (/ (length word) 2)) 
+      (gonumbr (nth i word))
+      )
+  
+  )
+(define (gol2 word i)
+  (if (< i (/ (length word) 2)) 
+      (nth i word)
+      )
+  
+  )
+
+
+(define (goletter1 word i)
+  (if (< i (/(length word)2))
+    (flat (list (gol1 word i ) ;перевод в цифр
+                (goletter1 word (+ i 1))))          
+    )
+    )
+(define (goletter2 word i)
+  (if (< i (/(length word)2))
+    (flat (list (gol2 word i ) ;перевод в цифр
+                (goletter2 word (+ i 1))))          
+    )
+    )
+
+(define (gotire numlst litlst i)
+  (if (< i (length numlst))
+ 	(if (= (nth i numlst) "3") ;Если гласная
+        (if (>= (+ i 3) (length numlst)) ;Если после гласной меньше двух букв	
+         
+         
+         (if (= (+ i 1) (length numlst))   
+          	(flat(list(nth i litlst) (gotire numlst litlst (+ i 1))))
+            (flat(list (nth i litlst) (gotire numlst litlst (+ i 1)))))
+          		
+            
+(if (and(= (nth (+ i 1) numlst) "1")(= (nth (+ i 2) numlst) "1"));Правило 1
+(flat(list (nth i litlst) "-" (gotire numlst litlst (+ i 1))))
+	(if (and(= (nth (+ i 1) numlst) "1")(= (nth (+ i 2) numlst) "2"))  ;Правило 2
+		(flat(list (nth i litlst) "-" (gotire numlst litlst (+ i 1))))
+		(if (and(= (nth (+ i 1) numlst) "2")(= (nth (+ i 2) numlst) "1")) ;Правило 3
+        	(flat(list (nth i litlst) (nth (+ i 1) litlst) "-" (gotire numlst litlst (+ i 2))))
+            (if (and(= (nth (+ i 1) numlst) "4") (= (nth (+ i 2) numlst) "2"))
+            	(flat(list (nth i litlst) (nth (+ i 1) litlst) "-" (gotire numlst litlst (+ i 2))))
+                (flat(list (nth i litlst) "-" (gotire numlst litlst (+ i 1)))))
+    	)
+    )    
+)  
+  		)
+    (flat(list (nth i litlst) (gotire numlst litlst (+ i 1)))) 
+	)
+)
+)
+
+(define (goWord predloj i)
+  (if (< i (length predloj))
+  (cons 
+   (join(chop(gotire (join(chop(goletter1 (nth i predloj) 0)))
+   (join(chop(goletter2 (nth i predloj) 0))) 0)));слово из цифр 
+      (goWord predloj (+ i 1)))
+  )
+  )
+
+
+(define (goPredloj text i)
+  (if (< i (length text)))
+  (chop(goWord (nth i text) 0))
+
+  )
+
+(define (foo text)
+  (if (empty? text)
+      "empty"
+       (goPredloj text 0)
+  ))
+
+(foo '(("чайник" "привет" "креветка")))
