@@ -1,0 +1,79 @@
+(define (gol word i)
+  (if (< i (length word))     
+  (nth i word)
+  )
+)
+
+
+(define (goletter word i)
+  (if (< i (/(length word)2))
+    (flat (list  (gol word i) (goletter word (+ i 1))))          
+    )
+)
+
+(define (getmeokon revlst i)
+  (if (>= i 0)
+      (cons (first revlst)  (getmeokon (rest revlst) (- i 1)))
+  )
+  )
+
+(define (createokon revlst revslovar i)
+  (if (< i (length revlst))
+   (cons (join(chop(getmeokon revlst i))) (createokon revlst revslovar (+ i 1)))  
+   )
+)
+
+(define (cut lst revslovar i)
+  (if (< i (length lst))
+      (if (nil? (find (nth i lst) revslovar))
+          (if (= (+ i 1) (length lst))
+              0
+          	(cut lst revslovar (+ i 1)))
+  		  (+ i 1)
+          )
+      )
+  )
+
+(define (countcut lst revslovar)
+(cut (chop(createokon (reverse lst) revslovar 0))revslovar 0) 
+)
+
+(define (obrezanie lst revslovar)
+  (chop lst (countcut lst revslovar))  
+  )
+
+
+
+(define (goWordt predloj i)
+  (if (< i (length predloj))
+	(cons(join 
+          (reverse(chop (goletter (nth i predloj) 0) )))(goWordt predloj (+ i 1))))
+)
+
+(define (goWord predloj slovar i)
+  (if (< i (length predloj))
+ (cons(join(obrezanie (chop (goletter (nth i predloj) 0)) slovar))(goWord predloj slovar (+ i 1)))
+  )
+)
+
+
+(define (goPredloj text slovar i)
+  (if (< i (length text)))
+(chop(goWord (nth i text) slovar 0))
+  )
+
+(define (start text slovar i)
+	(if (< i (length text))
+     (cons (goPredloj text slovar i) (start text slovar (+ i 1)))
+     )
+)
+
+(define (foo text slovar)
+  (if (empty? text)
+      "empty"
+      (chop(start text (chop(goWordt slovar 0)) 0)))
+  
+  )
+
+
+(foo '(("умываться" "утром" "мне" "очень" "нравится" )) '("ся" "ом"))
